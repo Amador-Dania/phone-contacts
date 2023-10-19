@@ -1,0 +1,39 @@
+.contacts-container {
+  width: 50%;
+  padding: 20px;
+  border: 2px solid #ccc;
+  background-color: #f2f2f2;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-item {
+  margin: 10px 0;
+}
+
+.highlight-button {
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.highlight-button:hover {
+  background-color: #0055aa;
+}
+
+.details-container {
+  width: 50%;
+  padding: 20px;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}

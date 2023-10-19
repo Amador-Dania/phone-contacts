@@ -1,0 +1,37 @@
+/* Estilo general para el contenedor de detalles */
+.container {
+  text-align: center;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+/* Estilo para la sección de detalles del contacto */
+.contact-details {
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para la imagen del contacto */
+.contact-image {
+  border-radius: 50%;
+}
+
+/* Estilo para el nombre del contacto */
+.contact-name {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* Estilo para el número de teléfono y el correo electrónico */
+.contact-info {
+  font-size: 1.2em;
+}
+
+/* Estilo para el mensaje de "Selecciona un contacto..." */
+.select-message {
+  font-size: 1.2em;
+  color: #888;
+}
