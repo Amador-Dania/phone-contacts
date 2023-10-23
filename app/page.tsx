@@ -1,24 +1,34 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContactsList from "./components/contactList/ContactsList";
-import useContacts from "./contacts-api/useContacts";
-import SearchContact from "./components/SearchContact";
+import useContacts, { Contacts } from "./contacts-api/useContacts";
 
 export default function Home() {
-  const { contacts, loading } = useContacts();
   const [query, setQuery] = useState("");
+  const [filteredContact, setFilteredContact] = useState<Contacts[]>([]);
 
-  const filteredContact = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(query.toLowerCase())
-  );
+  useEffect(() => {
+    setFilteredContact(contacts);
+  }, [contacts]);
+
+  function handleSearch() {
+    const filteredContact = contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(query.toLowerCase())
+    );
+
+    setFilteredContact(filteredContact);
+  }
 
   return (
     <main>
-      <div className="flex justify-center ...">
-        <SearchContact query={query} onQuery={setQuery} />
-      </div>
-      <div>
-        <ContactsList contacts={filteredContact} loading={loading} />
+      <div className="contacts-container">
+        <ContactsList
+          filteredContact={filteredContact}
+          loading={loading}
+          query={query}
+          setQuery={setQuery}
+          handleSearch={handleSearch}
+        />
       </div>
     </main>
   );

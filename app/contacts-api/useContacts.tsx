@@ -8,21 +8,21 @@ export interface Contacts {
   phone: string;
 }
 
-export function useContacts() {
-  const [contacts, setContacts] = useState<Contacts[]>([]);
+export function useGetContacts() {
+  const [contactsData, setContactsData] = useState<Contacts[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     axios
       .get("https://jsonplaceholder.typicode.com/users")
       .then((res) => {
-        const contacts = res.data;
-        if (Array.isArray(contacts)) {
-          setContacts(contacts);
+        const contactsData = res.data;
+        if (Array.isArray(contactsData)) {
+          setContactsData(contactsData);
           setLoading(false);
         } else {
           setLoading(true);
-          console.log('Error: "contacts" is not an Array');
+          console.log('Error: "contactsData" is not an Array');
         }
       })
       .catch((error) => {
@@ -31,7 +31,7 @@ export function useContacts() {
       });
   }, []);
 
-  return { contacts, loading };
+  return { contactsData, loading };
 }
 
-export default useContacts;
+export default useGetContacts;

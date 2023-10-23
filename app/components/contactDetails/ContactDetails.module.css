@@ -1,5 +1,6 @@
 /* Estilo general para el contenedor de detalles */
 .container {
+  /* display: flex; */
   text-align: center;
   background-color: #f2f2f2;
   padding: 20px;
@@ -34,4 +35,44 @@
 .select-message {
   font-size: 1.2em;
   color: #888;
+}
+
+.edit-button {
+  background-color: #28a745; /* Color de fondo verde */
+  color: #fff; /* Color del texto blanco */
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px; /* Espacio superior */
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.edit-button:hover {
+  background-color: #1f7a38; /* Color de fondo verde más oscuro al pasar el cursor */
+}
+
+/* Estilo para el contenedor de edición de contacto */
+.edit-contact-container {
+  padding: 20px;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para los campos de entrada en modo de edición */
+.edit-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Estilo para las etiquetas de los campos de entrada en modo de edición */
+.edit-label {
+  font-weight: bold;
+  font-size: 18px;
 }

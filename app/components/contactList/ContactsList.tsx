@@ -1,16 +1,26 @@
 "use client";
 
-import React, { Fragment, useState } from "react";
-import { Contacts, useContacts } from "../../contacts-api/useContacts";
-import Image from "next/image";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Contacts } from "../../contacts-api/useContacts";
 import ContactDetails from "../contactDetails/ContactDetails";
+import styles from "./ContactList.module.css";
+import SearchContact from "../searchContact/SearchContact";
 
 interface ContactsListProps {
-  contacts: Contacts[];
+  filteredContact: Contacts[];
   loading: boolean;
+  query: string;
+  setQuery: Dispatch<SetStateAction<string>>;
+  handleSearch(): void;
 }
 
-export function ContactsList({ contacts, loading }: ContactsListProps) {
+export function ContactsList({
+  filteredContact,
+  loading,
+  query,
+  setQuery,
+  handleSearch,
+}: ContactsListProps) {
   const [selectedContact, setSelectedContact] = useState<Contacts | null>(null);
 
   const handleSelectedContact = (contact: Contacts) => {
@@ -20,17 +30,25 @@ export function ContactsList({ contacts, loading }: ContactsListProps) {
 
   return (
     <>
-      <div className="container mx-auto px-4 grid grid-flow-col justify-stretch">
-        <div className="contacts-container">
+      <div className={styles.container}>
+        <div className={styles["contacts-container"]}>
+          <div className={styles["add-contact-container"]}>
+            <h2>Search Contact:</h2>
+            <SearchContact
+              query={query}
+              setQuery={setQuery}
+              handleSearch={handleSearch}
+            />
+          </div>
           <h1>Contacts:</h1>
           {loading ? (
-            <div className="loading-message">...loading</div>
+            <div className={styles["loading-message"]}>...loading</div>
           ) : (
-            <ul className="contact-list">
-              {contacts.map((contact) => (
-                <li key={contact.id} className="contact-item">
+            <ul className={styles["contact-list"]}>
+              {filteredContact.map((contact) => (
+                <li key={contact.id} className={styles["contact-item"]}>
                   <button
-                    className="highlight-button"
+                    className={styles["highlight-button"]}
                     onClick={() => handleSelectedContact(contact)}
                   >
                     {contact.name}
@@ -40,8 +58,11 @@ export function ContactsList({ contacts, loading }: ContactsListProps) {
             </ul>
           )}
         </div>
-        <div className="details-container">
-          <ContactDetails selectedContact={selectedContact} />
+        <div className={styles["details-container"]}>
+          <ContactDetails
+            selectedContact={selectedContact}
+            setSelectedContact={setSelectedContact}
+          />
         </div>
       </div>
     </>

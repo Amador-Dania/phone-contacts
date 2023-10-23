@@ -19,3 +19,13 @@
 body {
   padding: 1rem;
 }
+
+main {
+  background-color: #f2f2f2;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,48 @@
+/* Estilo para el contenedor de input y botón */
+.iphone-input-container {
+  display: flex; /* Establecer el diseño en línea (inline) */
+  align-items: center; /* Centrar verticalmente */
+  width: 70%; /* Ajusta el ancho según tus preferencias */
+  margin: 10px auto;
+}
+
+/* Estilo para el input con apariencia de iPhone */
+.iphone-input {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 18px;
+  width: 100%; /* El input ocupa todo el ancho disponible */
+  transition: border-color 0.2s;
+}
+
+.iphone-input::placeholder {
+  color: #ccc;
+}
+
+.iphone-input:focus {
+  border-color: #0077cc;
+}
+
+/* Estilo para el botón con apariencia de iPhone */
+.iphone-button {
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Opcional: Cambiar el color del botón al pasar el cursor sobre él */
+.iphone-button:hover {
+  background-color: #0055aa;
+}
