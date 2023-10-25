@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
-import { Contacts } from "../../contacts-api/useContacts";
 import styles from "./ContactDetails.module.css";
+import { ContactsDataInterface } from "@/app/contacts-api/useGetContacts";
+import { IdContactsContext, SetContactContext } from "@/app/ContactsContext";
 
 interface ContactDetailsProps {
   selectedContact: Contacts | null;
@@ -13,6 +14,8 @@ function ContactDetails({
   setSelectedContact,
 }: ContactDetailsProps) {
   const [isEditing, setisEditing] = useState(false);
+  const contacts = useContext(IdContactsContext);
+  const setContactsData = useContext(SetContactContext);
 
   function handleEditContact() {
     setisEditing(!isEditing);
@@ -39,22 +42,22 @@ function ContactDetails({
                     <h1 className={styles["edit-label"]}>Name:</h1>
                     <input
                       type="text"
-                      value={selectedContact.name}
                       className={styles["edit-input"]}
+                      value={selectedContact.name}
                     />
                   </div>
                   <div className={styles["contact-info"]}>
                     <h1 className={styles["edit-label"]}>Phone Number:</h1>
                     <input
                       type="text"
-                      value={selectedContact.phone}
                       className={styles["edit-input"]}
+                      value={selectedContact.phone}
                     />
                     <h1 className={styles["edit-label"]}>Email:</h1>
                     <input
                       type="text"
-                      value={selectedContact.email}
                       className={styles["edit-input"]}
+                      value={selectedContact.email}
                     />
                   </div>
                 </div>
@@ -76,6 +79,7 @@ function ContactDetails({
                 >
                   {!isEditing ? "Edit contact" : "Save Changes"}
                 </button>
+                or <button className={styles["delete-button"]}>Delete</button>
               </div>
             </>
           ) : (

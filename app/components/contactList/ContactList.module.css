@@ -51,3 +51,46 @@
 .highlight-button:hover {
   background-color: #0055aa;
 }
+
+.button-container {
+  display: flex; /* Establecer el diseño en línea (en fila) */
+  justify-content: space-between; /* Espacio igual entre los botones */
+  width: 70%;
+  margin: 10px auto;
+}
+
+/* Estilo para el botón "Agregar" con apariencia de iPhone */
+.iphone-button-add {
+  background-color: #0077cc; /* Azul típico de iOS */
+  color: #fff; /* Texto blanco */
+  border: none;
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 10px;
+  font-size: 18px;
+  width: 100%; /* El botón ocupa todo el ancho disponible */
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Opcional: Cambiar el color del botón al pasar el cursor sobre él */
+.iphone-button-add:hover {
+  background-color: #0055aa; /* Cambio de color al pasar el cursor */
+}
+
+/* Estilo para el botón "Buscar" con apariencia de iPhone */
+.iphone-button-search {
+  background-color: #28a745; /* Verde típico de iOS */
+  color: #fff; /* Texto blanco */
+  border: none;
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 10px;
+  font-size: 18px;
+  width: 100%; /* El botón ocupa todo el ancho disponible */
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Opcional: Cambiar el color del botón al pasar el cursor sobre él */
+.iphone-button-search:hover {
+  background-color: #1f7a38; /* Cambio de color al pasar el cursor */
+}

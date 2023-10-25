@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export interface Contacts {
+export interface ContactsDataInterface {
   id: string;
   name: string;
   email: string;
@@ -9,7 +9,7 @@ export interface Contacts {
 }
 
 export function useGetContacts() {
-  const [contactsData, setContactsData] = useState<Contacts[]>([]);
+  const [contactsData, setContactsData] = useState<ContactsDataInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export function useGetContacts() {
       });
   }, []);
 
-  return { contactsData, loading };
+  return { contactsData, setContactsData, loading };
 }
 
 export default useGetContacts;

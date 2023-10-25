@@ -52,6 +52,21 @@
   background-color: #1f7a38; /* Color de fondo verde más oscuro al pasar el cursor */
 }
 
+.delete-button {
+  background-color: #dc3545; /* Red background color */
+  color: #fff; /* White text color */
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px; /* Top margin */
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-button:hover {
+  background-color: #c82333; /* Darker red background color on hover */
+}
+
 /* Estilo para el contenedor de edición de contacto */
 .edit-contact-container {
   padding: 20px;

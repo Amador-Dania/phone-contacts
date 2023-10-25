@@ -46,3 +46,31 @@
 .iphone-button:hover {
   background-color: #0055aa;
 }
+
+/* Estilo para el contenedor de los tres inputs */
+.contact-input-container {
+  display: flex;
+  flex-direction: column; /* Alinea los inputs verticalmente */
+  width: 70%;
+  margin: 10px auto;
+}
+
+/* Estilo para los inputs de nombre, teléfono y correo */
+.contact-input {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 18px;
+  width: 100%;
+  margin-bottom: 10px; /* Espacio inferior entre los inputs */
+  transition: border-color 0.2s;
+}
+
+.contact-input::placeholder {
+  color: #ccc;
+}
+
+.contact-input:focus {
+  border-color: #0077cc;
+}
