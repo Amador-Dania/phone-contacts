@@ -7,7 +7,6 @@ import useGetContacts, {
 import ContactDetails from "../contactDetails/ContactDetails";
 import styles from "./ContactList.module.css";
 import { IdContactsContext } from "@/app/ContactsContext";
-import { v4 as uuidv4 } from "uuid";
 import AddContact from "../addContact/AddContact";
 
 interface ContactsListProps {}
@@ -22,22 +21,8 @@ export function ContactsList({}: ContactsListProps) {
   const contacts = useContext(IdContactsContext);
 
   const handleSelectedContact = (contact: ContactsDataInterface) => {
-    const seletected = setSelectedContact(contact);
-    console.log(seletected);
+    setSelectedContact(contact);
   };
-
-  function handleAddContact(text: {
-    name: string;
-    phone: string;
-    email: string;
-  }) {
-    contacts.push({
-      id: uuidv4(),
-      name: text.name,
-      email: text.email,
-      phone: text.phone,
-    });
-  }
 
   return (
     <>
@@ -51,7 +36,11 @@ export function ContactsList({}: ContactsListProps) {
               Add Contact
             </button>
             <button
-              className={styles["iphone-button-search"]}
+              className={
+                !showAddContactPanel
+                  ? styles["iphone-button-search"]
+                  : styles["iphone-button-search-disabled"]
+              }
               disabled={showAddContactPanel}
             >
               Search
@@ -60,7 +49,7 @@ export function ContactsList({}: ContactsListProps) {
           {showAddContactPanel && (
             <div className={styles["add-contact-container"]}>
               <h2>Add Contact:</h2>
-              <AddContact onAddContact={handleAddContact} />
+              <AddContact />
             </div>
           )}
           <h1>Contacts:</h1>
@@ -83,10 +72,15 @@ export function ContactsList({}: ContactsListProps) {
         </div>
         <div className={styles["details-container"]}>
           <ContactDetails
+            key={selectedContact ? selectedContact.id : "no-contact"}
             selectedContact={selectedContact}
             setSelectedContact={setSelectedContact}
           />
         </div>
+      </div>
+      <div className={styles["notification-container"]}>
+        <div className={styles["notification-saved"]}>Contacto guardado</div>
+        <div className={styles["notification-deleted"]}>Contacto eliminado</div>
       </div>
     </>
   );

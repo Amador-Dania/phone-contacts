@@ -94,3 +94,15 @@
 .iphone-button-search:hover {
   background-color: #1f7a38; /* Cambio de color al pasar el cursor */
 }
+
+.iphone-button-search-disabled {
+  background-color: grey; /* Verde típico de iOS */
+  color: #fff; /* Texto blanco */
+  border: none;
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 10px;
+  font-size: 18px;
+  width: 100%; /* El botón ocupa todo el ancho disponible */
+  cursor: pointer;
+  transition: background-color 0.2s;
+}

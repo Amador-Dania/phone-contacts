@@ -5,8 +5,10 @@ import { ContactsDataInterface } from "@/app/contacts-api/useGetContacts";
 import { IdContactsContext, SetContactContext } from "@/app/ContactsContext";
 
 interface ContactDetailsProps {
-  selectedContact: Contacts | null;
-  setSelectedContact: React.Dispatch<React.SetStateAction<Contacts | null>>;
+  selectedContact: ContactsDataInterface | null;
+  setSelectedContact: React.Dispatch<
+    React.SetStateAction<ContactsDataInterface | null>
+  >;
 }
 
 function ContactDetails({
@@ -14,11 +16,48 @@ function ContactDetails({
   setSelectedContact,
 }: ContactDetailsProps) {
   const [isEditing, setisEditing] = useState(false);
-  const contacts = useContext(IdContactsContext);
   const setContactsData = useContext(SetContactContext);
+  const contacts = useContext(IdContactsContext);
 
   function handleEditContact() {
     setisEditing(!isEditing);
+
+    setContactsData(
+      contacts.map((c) => {
+        if (c.id === selectedContact?.id) {
+          return selectedContact;
+        } else {
+          return c;
+        }
+      })
+    );
+  }
+
+  const handleChange = (
+    property: string,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const newValue = e.target.value;
+    setSelectedContact((prevContact) => {
+      if (prevContact) {
+        return {
+          ...prevContact,
+          [property]: newValue,
+        };
+      }
+      return null;
+    });
+  };
+
+  function handleDeleteContact() {
+    if (!selectedContact) {
+      return null;
+    }
+    setContactsData((prevContacts) =>
+      prevContacts.filter((c) => c.id !== selectedContact.id)
+    );
+
+    setSelectedContact(null);
   }
 
   return (
@@ -44,6 +83,7 @@ function ContactDetails({
                       type="text"
                       className={styles["edit-input"]}
                       value={selectedContact.name}
+                      onChange={(e) => handleChange("name", e)}
                     />
                   </div>
                   <div className={styles["contact-info"]}>
@@ -52,12 +92,14 @@ function ContactDetails({
                       type="text"
                       className={styles["edit-input"]}
                       value={selectedContact.phone}
+                      onChange={(e) => handleChange("phone", e)}
                     />
                     <h1 className={styles["edit-label"]}>Email:</h1>
                     <input
                       type="text"
                       className={styles["edit-input"]}
                       value={selectedContact.email}
+                      onChange={(e) => handleChange("email", e)}
                     />
                   </div>
                 </div>
@@ -79,7 +121,13 @@ function ContactDetails({
                 >
                   {!isEditing ? "Edit contact" : "Save Changes"}
                 </button>
-                or <button className={styles["delete-button"]}>Delete</button>
+                or{" "}
+                <button
+                  className={styles["delete-button"]}
+                  onClick={handleDeleteContact}
+                >
+                  Delete
+                </button>
               </div>
             </>
           ) : (

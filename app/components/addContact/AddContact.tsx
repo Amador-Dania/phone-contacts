@@ -1,16 +1,33 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./AddContact.module.css";
+import { IdContactsContext, SetContactContext } from "@/app/ContactsContext";
+import { v4 as uuidv4 } from "uuid";
 
-interface AddContactProps {
-  onAddContact: (text: { name: string; phone: string; email: string }) => void;
-}
-
-export default function AddContact({ onAddContact }: AddContactProps) {
+export default function AddContact() {
   const [text, setText] = useState({
     name: "",
     phone: "",
     email: "",
   });
+
+  const contacts = useContext(IdContactsContext);
+  const setContact = useContext(SetContactContext);
+
+  function handleAddContact(text: {
+    name: string;
+    phone: string;
+    email: string;
+  }) {
+    setContact([
+      ...contacts,
+      {
+        id: uuidv4(),
+        name: text.name,
+        phone: text.phone,
+        email: text.email,
+      },
+    ]);
+  }
 
   return (
     <div className={styles["iphone-input-container"]}>
@@ -56,7 +73,7 @@ export default function AddContact({ onAddContact }: AddContactProps) {
         className={styles["iphone-button"]}
         onClick={() => {
           setText({ name: "", phone: "", email: "" });
-          onAddContact(text);
+          handleAddContact(text);
         }}
       >
         +
