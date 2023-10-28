@@ -1,0 +1,33 @@
+.notification {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20px;
+  background-color: #f1f1f1;
+  padding: 10px 20px;
+  margin: 10px;
+  max-width: 250px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  position: fixed; /* Fija la notificación respecto al viewport */
+  bottom: 20px; /* 20px desde la parte inferior del viewport */
+  right: 20px; /* 20px desde la parte derecha del viewport */
+  z-index: 1000; /* Sitúa la notificación por encima de otros elementos */
+}
+
+.notificationIcon {
+  font-size: 24px;
+}
+
+.notificationText {
+  font-size: 18px;
+}
+
+.saved {
+  background-color: #e6fff5;
+  color: #00a885;
+}
+
+.deleted {
+  background-color: #ffe6e6;
+  color: #cc0000;
+}

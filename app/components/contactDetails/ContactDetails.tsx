@@ -1,8 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./ContactDetails.module.css";
 import { ContactsDataInterface } from "@/app/contacts-api/useGetContacts";
 import { IdContactsContext, SetContactContext } from "@/app/ContactsContext";
+import Notification from "@/app/notifications/Notification";
 
 interface ContactDetailsProps {
   selectedContact: ContactsDataInterface | null;
@@ -16,6 +17,8 @@ function ContactDetails({
   setSelectedContact,
 }: ContactDetailsProps) {
   const [isEditing, setisEditing] = useState(false);
+  const [deletedNotification, setDeletedNotification] = useState(false);
+
   const setContactsData = useContext(SetContactContext);
   const contacts = useContext(IdContactsContext);
 
@@ -50,15 +53,15 @@ function ContactDetails({
   };
 
   function handleDeleteContact() {
-    if (!selectedContact) {
-      return null;
-    }
-    setContactsData((prevContacts) =>
-      prevContacts.filter((c) => c.id !== selectedContact.id)
+    setContactsData((contacts) =>
+      contacts.filter((c) => c.id !== selectedContact?.id)
     );
 
     setSelectedContact(null);
+    setDeletedNotification(true);
   }
+
+  console.log("Before", deletedNotification);
 
   return (
     <>
@@ -124,7 +127,10 @@ function ContactDetails({
                 or{" "}
                 <button
                   className={styles["delete-button"]}
-                  onClick={handleDeleteContact}
+                  onClick={() => {
+                    handleDeleteContact();
+                  }}
+                  disabled={isEditing}
                 >
                   Delete
                 </button>
@@ -139,6 +145,7 @@ function ContactDetails({
           )}
         </div>
       </div>
+      <div>{deletedNotification && <Notification type="deleted" />}</div>
     </>
   );
 }

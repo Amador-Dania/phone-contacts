@@ -3,7 +3,13 @@ import styles from "./AddContact.module.css";
 import { IdContactsContext, SetContactContext } from "@/app/ContactsContext";
 import { v4 as uuidv4 } from "uuid";
 
-export default function AddContact() {
+interface AddContactInterface {
+  setSavedNotification: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function AddContact({
+  setSavedNotification,
+}: AddContactInterface) {
   const [text, setText] = useState({
     name: "",
     phone: "",
@@ -18,15 +24,20 @@ export default function AddContact() {
     phone: string;
     email: string;
   }) {
-    setContact([
-      ...contacts,
-      {
-        id: uuidv4(),
-        name: text.name,
-        phone: text.phone,
-        email: text.email,
-      },
-    ]);
+    if ((text.name, text.phone, text.email === "")) {
+      undefined;
+    } else {
+      setContact([
+        ...contacts,
+        {
+          id: uuidv4(),
+          name: text.name,
+          phone: text.phone,
+          email: text.email,
+        },
+      ]);
+      setSavedNotification(true);
+    }
   }
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useGetContacts, {
   ContactsDataInterface,
 } from "../../contacts-api/useGetContacts";
@@ -8,6 +8,8 @@ import ContactDetails from "../contactDetails/ContactDetails";
 import styles from "./ContactList.module.css";
 import { IdContactsContext } from "@/app/ContactsContext";
 import AddContact from "../addContact/AddContact";
+import Notification from "@/app/notifications/Notification";
+import SearchContact from "../searchContact/SearchContact";
 
 interface ContactsListProps {}
 
@@ -16,9 +18,18 @@ export function ContactsList({}: ContactsListProps) {
     useState<ContactsDataInterface | null>(null);
 
   const [showAddContactPanel, setshowAddContactPanel] = useState(false);
+  const [savedNotification, setSavedNotification] = useState(false);
 
   const { loading } = useGetContacts();
   const contacts = useContext(IdContactsContext);
+
+  useEffect(() => {
+    if (savedNotification) {
+      setTimeout(() => {
+        setSavedNotification(false);
+      }, 1000);
+    }
+  }, [savedNotification]);
 
   const handleSelectedContact = (contact: ContactsDataInterface) => {
     setSelectedContact(contact);
@@ -49,9 +60,13 @@ export function ContactsList({}: ContactsListProps) {
           {showAddContactPanel && (
             <div className={styles["add-contact-container"]}>
               <h2>Add Contact:</h2>
-              <AddContact />
+              <AddContact setSavedNotification={setSavedNotification} />
             </div>
           )}
+          <div className={styles["search-container"]}>
+            <SearchContact />
+          </div>
+
           <h1>Contacts:</h1>
           {loading ? (
             <div className={styles["loading-message"]}>...loading</div>
@@ -78,10 +93,7 @@ export function ContactsList({}: ContactsListProps) {
           />
         </div>
       </div>
-      <div className={styles["notification-container"]}>
-        <div className={styles["notification-saved"]}>Contacto guardado</div>
-        <div className={styles["notification-deleted"]}>Contacto eliminado</div>
-      </div>
+      <div>{savedNotification && <Notification type="saved" />}</div>
     </>
   );
 }
