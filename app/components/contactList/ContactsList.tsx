@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useGetContacts, {
   ContactsDataInterface,
 } from "../../contacts-api/useGetContacts";
 import ContactDetails from "../contactDetails/ContactDetails";
 import styles from "./ContactList.module.css";
-import { IdContactsContext } from "@/app/ContactsContext";
+import {
+  useContacts,
+  useDeletedNotification,
+  useSavedNotification,
+} from "@/app/ContactsContext";
 import AddContact from "../addContact/AddContact";
 import Notification from "@/app/notifications/Notification";
 import SearchContact from "../searchContact/SearchContact";
@@ -18,18 +22,12 @@ export function ContactsList({}: ContactsListProps) {
     useState<ContactsDataInterface | null>(null);
 
   const [showAddContactPanel, setshowAddContactPanel] = useState(false);
-  const [savedNotification, setSavedNotification] = useState(false);
 
   const { loading } = useGetContacts();
-  const contacts = useContext(IdContactsContext);
 
-  useEffect(() => {
-    if (savedNotification) {
-      setTimeout(() => {
-        setSavedNotification(false);
-      }, 1000);
-    }
-  }, [savedNotification]);
+  const contacts = useContacts();
+  const savedNotification = useSavedNotification();
+  const deletedNotification = useDeletedNotification();
 
   const handleSelectedContact = (contact: ContactsDataInterface) => {
     setSelectedContact(contact);
@@ -59,8 +57,7 @@ export function ContactsList({}: ContactsListProps) {
           </div>
           {showAddContactPanel && (
             <div className={styles["add-contact-container"]}>
-              <h2>Add Contact:</h2>
-              <AddContact setSavedNotification={setSavedNotification} />
+              <AddContact />
             </div>
           )}
           <div className={styles["search-container"]}>
@@ -94,6 +91,7 @@ export function ContactsList({}: ContactsListProps) {
         </div>
       </div>
       <div>{savedNotification && <Notification type="saved" />}</div>
+      <div>{deletedNotification && <Notification type="deleted" />}</div>
     </>
   );
 }

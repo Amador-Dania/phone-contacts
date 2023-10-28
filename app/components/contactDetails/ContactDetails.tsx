@@ -2,7 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./ContactDetails.module.css";
 import { ContactsDataInterface } from "@/app/contacts-api/useGetContacts";
-import { IdContactsContext, SetContactContext } from "@/app/ContactsContext";
+import {
+  useContacts,
+  useDeletedNotification,
+  useSetContact,
+  useSetDeletedNotification,
+} from "@/app/ContactsContext";
 import Notification from "@/app/notifications/Notification";
 
 interface ContactDetailsProps {
@@ -17,15 +22,17 @@ function ContactDetails({
   setSelectedContact,
 }: ContactDetailsProps) {
   const [isEditing, setisEditing] = useState(false);
-  const [deletedNotification, setDeletedNotification] = useState(false);
 
-  const setContactsData = useContext(SetContactContext);
-  const contacts = useContext(IdContactsContext);
+  const contacts = useContacts();
+  const setContacts = useSetContact();
+
+  const deletedNotification = useDeletedNotification();
+  const setDeletedNotification = useSetDeletedNotification();
 
   function handleEditContact() {
     setisEditing(!isEditing);
 
-    setContactsData(
+    setContacts(
       contacts.map((c) => {
         if (c.id === selectedContact?.id) {
           return selectedContact;
@@ -53,15 +60,21 @@ function ContactDetails({
   };
 
   function handleDeleteContact() {
-    setContactsData((contacts) =>
+    setContacts((contacts) =>
       contacts.filter((c) => c.id !== selectedContact?.id)
     );
 
     setSelectedContact(null);
     setDeletedNotification(true);
   }
-
-  console.log("Before", deletedNotification);
+  useEffect(() => {
+    if (deletedNotification) {
+      setTimeout(() => {
+        setDeletedNotification(false);
+      }, 1000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deletedNotification]);
 
   return (
     <>
@@ -145,7 +158,6 @@ function ContactDetails({
           )}
         </div>
       </div>
-      <div>{deletedNotification && <Notification type="deleted" />}</div>
     </>
   );
 }

@@ -1,23 +1,35 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./AddContact.module.css";
-import { IdContactsContext, SetContactContext } from "@/app/ContactsContext";
+import {
+  useContacts,
+  useSavedNotification,
+  useSetContact,
+  useSetSavedNotification,
+} from "@/app/ContactsContext";
 import { v4 as uuidv4 } from "uuid";
 
-interface AddContactInterface {
-  setSavedNotification: React.Dispatch<React.SetStateAction<boolean>>;
-}
+interface AddContactInterface {}
 
-export default function AddContact({
-  setSavedNotification,
-}: AddContactInterface) {
+export default function AddContact({}: AddContactInterface) {
   const [text, setText] = useState({
     name: "",
     phone: "",
     email: "",
   });
 
-  const contacts = useContext(IdContactsContext);
-  const setContact = useContext(SetContactContext);
+  const contacts = useContacts();
+  const setContacts = useSetContact();
+  const savedNotification = useSavedNotification();
+  const setSavedNotification = useSetSavedNotification();
+
+  useEffect(() => {
+    if (savedNotification) {
+      setTimeout(() => {
+        setSavedNotification(false);
+      }, 1000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [savedNotification]);
 
   function handleAddContact(text: {
     name: string;
@@ -27,7 +39,7 @@ export default function AddContact({
     if ((text.name, text.phone, text.email === "")) {
       undefined;
     } else {
-      setContact([
+      setContacts([
         ...contacts,
         {
           id: uuidv4(),
@@ -48,36 +60,21 @@ export default function AddContact({
           type="text"
           placeholder="Name"
           value={text.name}
-          onChange={(e) =>
-            setText({
-              ...text,
-              name: e.target.value,
-            })
-          }
+          onChange={(e) => setText({ ...text, name: e.target.value })}
         />
         <input
           className={styles["contact-input"]}
           type="text"
           placeholder="Phone Number"
           value={text.phone}
-          onChange={(e) =>
-            setText({
-              ...text,
-              phone: e.target.value,
-            })
-          }
+          onChange={(e) => setText({ ...text, phone: e.target.value })}
         />
         <input
           className={styles["contact-input"]}
           type="text"
           placeholder="Email"
           value={text.email}
-          onChange={(e) =>
-            setText({
-              ...text,
-              email: e.target.value,
-            })
-          }
+          onChange={(e) => setText({ ...text, email: e.target.value })}
         />
       </div>
       <button

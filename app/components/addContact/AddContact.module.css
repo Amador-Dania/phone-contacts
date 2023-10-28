@@ -27,19 +27,18 @@
 
 /* Estilo para el botón con apariencia de iPhone */
 .iphone-button {
-  background-color: #0077cc;
-  color: #fff;
+  background-color: blue; /* Cambiado a azul como en .search-button */
+  color: white; /* Cambiado a blanco como en .search-button */
   border: none;
-  border-radius: 50%;
-  padding: 10px;
+  border-radius: 20px; /* Cambiado a 20px como en .search-button */
+  padding: 10px 20px; /* Cambiado a 10px 20px como en .search-button */
   font-size: 24px;
-  width: 40px;
-  height: 40px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 10px; /* Añadido como en .search-button */
 }
 
 /* Opcional: Cambiar el color del botón al pasar el cursor sobre él */
