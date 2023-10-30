@@ -9,7 +9,6 @@ import {
 import useGetContacts, {
   ContactsDataInterface,
 } from "./contacts-api/useGetContacts";
-import { create } from "domain";
 
 interface ContactProviderInterface {
   children: ReactNode;

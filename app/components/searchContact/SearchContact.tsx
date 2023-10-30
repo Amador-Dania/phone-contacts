@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./SearchContact.module.css";
+import { useContacts } from "@/app/ContactsContext";
 
-function SearchContact() {
+interface SearchContactInterface {
+  searchContactQuery: string;
+  setSearchContactQuery: React.Dispatch<React.SetStateAction<string>>;
+  setHasTyped: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function SearchContact({
+  searchContactQuery,
+  setSearchContactQuery,
+  setHasTyped,
+}: SearchContactInterface) {
   return (
     <>
       <input
         type="text"
         className={styles["search-input"]}
-        placeholder="Buscar..."
+        placeholder="type a name..."
+        value={searchContactQuery}
+        onChange={(e) => {
+          setHasTyped(true);
+          setSearchContactQuery(e.target.value);
+        }}
       />
-      <button className={styles["search-button"]}>Search</button>
     </>
   );
 }

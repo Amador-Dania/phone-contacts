@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useGetContacts, {
   ContactsDataInterface,
 } from "../../contacts-api/useGetContacts";
@@ -18,20 +18,37 @@ import SearchContact from "../searchContact/SearchContact";
 interface ContactsListProps {}
 
 export function ContactsList({}: ContactsListProps) {
-  const [selectedContact, setSelectedContact] =
-    useState<ContactsDataInterface | null>(null);
-
-  const [showAddContactPanel, setshowAddContactPanel] = useState(false);
-
   const { loading } = useGetContacts();
 
   const contacts = useContacts();
   const savedNotification = useSavedNotification();
   const deletedNotification = useDeletedNotification();
 
-  const handleSelectedContact = (contact: ContactsDataInterface) => {
-    setSelectedContact(contact);
+  const [selectedContact, setSelectedContact] =
+    useState<ContactsDataInterface | null>(null);
+  const [showAddContactPanel, setShowAddContactPanel] = useState(false);
+  const [showSearchContactPanel, setShowSearchContactPanel] = useState(false);
+  const [searchContactQuery, setSearchContactQuery] = useState("");
+  const [hasTyped, setHasTyped] = useState(false);
+
+  const handleSelectedContact = (filter: ContactsDataInterface) => {
+    setSelectedContact(filter);
   };
+
+  const filteredContact = contacts.filter((contact: ContactsDataInterface) =>
+    contact.name.toLowerCase().startsWith(searchContactQuery.toLowerCase())
+  );
+
+  let filter;
+  if (hasTyped) {
+    if (filteredContact.length > 0) {
+      filter = filteredContact;
+    } else {
+      filter = null;
+    }
+  } else {
+    filter = contacts;
+  }
 
   return (
     <>
@@ -39,8 +56,13 @@ export function ContactsList({}: ContactsListProps) {
         <div className={styles["contacts-container"]}>
           <div className={styles["button-container"]}>
             <button
-              className={styles["iphone-button-add"]}
-              onClick={() => setshowAddContactPanel(!showAddContactPanel)}
+              className={
+                !showSearchContactPanel
+                  ? styles["iphone-button-add"]
+                  : styles["iphone-button-search-disabled"]
+              }
+              disabled={showSearchContactPanel}
+              onClick={() => setShowAddContactPanel(!showAddContactPanel)}
             >
               Add Contact
             </button>
@@ -51,6 +73,7 @@ export function ContactsList({}: ContactsListProps) {
                   : styles["iphone-button-search-disabled"]
               }
               disabled={showAddContactPanel}
+              onClick={() => setShowSearchContactPanel(!showSearchContactPanel)}
             >
               Search
             </button>
@@ -60,16 +83,22 @@ export function ContactsList({}: ContactsListProps) {
               <AddContact />
             </div>
           )}
-          <div className={styles["search-container"]}>
-            <SearchContact />
-          </div>
+          {showSearchContactPanel && (
+            <div className={styles["search-container"]}>
+              <SearchContact
+                searchContactQuery={searchContactQuery}
+                setSearchContactQuery={setSearchContactQuery}
+                setHasTyped={setHasTyped}
+              />
+            </div>
+          )}
 
           <h1>Contacts:</h1>
           {loading ? (
             <div className={styles["loading-message"]}>...loading</div>
           ) : (
             <ul className={styles["contact-list"]}>
-              {contacts.map((contact) => (
+              {filter?.map((contact) => (
                 <li key={contact.id} className={styles["contact-item"]}>
                   <button
                     className={styles["highlight-button"]}
