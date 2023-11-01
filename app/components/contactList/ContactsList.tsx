@@ -26,10 +26,11 @@ export function ContactsList({}: ContactsListProps) {
 
   const [selectedContact, setSelectedContact] =
     useState<ContactsDataInterface | null>(null);
-  const [showAddContactPanel, setShowAddContactPanel] = useState(false);
+  const [showAddContactPanel, setShowAddContactPanel] =
+    useState<boolean>(false);
   const [showSearchContactPanel, setShowSearchContactPanel] = useState(false);
-  const [searchContactQuery, setSearchContactQuery] = useState("");
-  const [hasTyped, setHasTyped] = useState(false);
+  const [searchContactQuery, setSearchContactQuery] = useState<string>("");
+  const [hasTyped, setHasTyped] = useState<boolean>(false);
 
   const handleSelectedContact = (filter: ContactsDataInterface) => {
     setSelectedContact(filter);

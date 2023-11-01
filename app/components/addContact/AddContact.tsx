@@ -10,8 +10,14 @@ import { v4 as uuidv4 } from "uuid";
 
 interface AddContactInterface {}
 
+interface TextInterface {
+  name: string;
+  phone: string;
+  email: string;
+}
+
 export default function AddContact({}: AddContactInterface) {
-  const [text, setText] = useState({
+  const [text, setText] = useState<TextInterface>({
     name: "",
     phone: "",
     email: "",
@@ -31,11 +37,7 @@ export default function AddContact({}: AddContactInterface) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedNotification]);
 
-  function handleAddContact(text: {
-    name: string;
-    phone: string;
-    email: string;
-  }) {
+  function handleAddContact(text: TextInterface) {
     if ((text.name, text.phone, text.email === "")) {
       undefined;
     } else {
